@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Transformer</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        textarea { width: 100%; height: 100px; margin-top: 10px; }
+        button { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Text Transformer</h1>
+    <textarea id="inputText" placeholder="Введіть текст тут"></textarea>
+    <button onclick="transformText()">Обробити текст</button>
+    <textarea id="outputText" placeholder="Результат з'явиться тут"></textarea>
+
+    <script>
+        function transformText() {
+            const input = document.getElementById("inputText").value;
+            const transformed = input
+                .replace(/і/g, 'i')
+                .replace(/І/g, 'I')
+                .replace(/у/g, 'y')                
+                .replace(/а/g, 'a')
+                .replace(/А/g, 'A')
+                .replace(/о/g, 'o')
+                .replace(/О/g, 'O')
+                .replace(/е/g, 'e')
+                .replace(/Е/g, 'E')
+                .replace(/р/g, 'p')
+                .replace(/Р/g, 'P')
+                .replace(/с/g, 'c')
+                .replace(/С/g, 'C')
+                .replace(/Т/g, 'T')
+                .replace(/х/g, 'x')
+                .replace(/Х/g, 'X');
+            document.getElementById("outputText").value = transformed;
+        }
+    </script>
+</body>
+</html>
