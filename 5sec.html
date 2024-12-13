@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перевірка бракованих таймкодів</title>
+</head>
+<body>
+    <h1>Перевірка бракованих таймкодів</h1>
+    
+    <textarea id="timecodeInput" placeholder="Введіть таймкоди, розділені новими рядками" rows="15" cols="50"></textarea>
+    <br><br>
+    <button id="processButton">Обробити таймкоди</button>
+    
+    <h2>Результат</h2>
+    <pre id="result"></pre>
+
+    <script>
+        function parseTimecode(timecode) {
+            const [hours, minutes, seconds, frames] = timecode.split(':').map(Number);
+            return (hours * 3600) + (minutes * 60) + seconds + (frames / 60);
+        }
+
+        function findShortIntervals(timecodes) {
+            const result = [];
+            for (let i = 0; i < timecodes.length - 1; i += 2) {
+                const start = parseTimecode(timecodes[i]);
+                const end = parseTimecode(timecodes[i + 1]);
+                const difference = end - start;
+
+                if (difference <= 5) {
+                    result.push(`${timecodes[i]}\n${timecodes[i + 1]}`);
+                }
+            }
+            return result;
+        }
+
+        document.getElementById('processButton').addEventListener('click', () => {
+            const input = document.getElementById('timecodeInput').value;
+            const timecodes = input.split(/\n+/).map(tc => tc.trim()).filter(tc => tc);
+
+            if (timecodes.length % 2 !== 0) {
+                alert('Кількість таймкодів повинна бути парною!');
+                return;
+            }
+
+            const shortIntervals = findShortIntervals(timecodes);
+
+            if (shortIntervals.length > 0) {
+                document.getElementById('result').textContent = shortIntervals.join('\n\n');
+            } else {
+                document.getElementById('result').textContent = 'Немає пар таймкодів з різницею менше 5 секунд.';
+            }
+        });
+    </script>
+</body>
+</html>
