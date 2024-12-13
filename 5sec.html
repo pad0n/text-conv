@@ -23,10 +23,10 @@
 
         function findShortIntervals(timecodes) {
             const result = [];
-            for (let i = 0; i < timecodes.length - 1; i += 2) {
-                const start = parseTimecode(timecodes[i]);
-                const end = parseTimecode(timecodes[i + 1]);
-                const difference = end - start;
+            for (let i = 0; i < timecodes.length - 1; i++) {
+                const current = parseTimecode(timecodes[i]);
+                const next = parseTimecode(timecodes[i + 1]);
+                const difference = next - current;
 
                 if (difference <= 5) {
                     result.push(`${timecodes[i]}\n${timecodes[i + 1]}`);
@@ -39,8 +39,8 @@
             const input = document.getElementById('timecodeInput').value;
             const timecodes = input.split(/\n+/).map(tc => tc.trim()).filter(tc => tc);
 
-            if (timecodes.length % 2 !== 0) {
-                alert('Кількість таймкодів повинна бути парною!');
+            if (timecodes.length < 2) {
+                alert('Потрібно ввести принаймні два таймкоди!');
                 return;
             }
 
